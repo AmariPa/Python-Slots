@@ -14,24 +14,24 @@ ROWS = 3
 COLS = 3
 
 # images for slots, commented out for the time being
-# A = climage.convert('assets/apple.png')
-# B = climage.convert('assets/banana.png')
-# C = climage.convert('assets/cherry.png')
-# D = climage.convert('assets/orange.png')
+A = ('\N{red apple}')
+B = ('\N{banana}')
+C = ('\N{grapes}')
+D = ('\N{coconut}')
 
 
 symbol_count = {
-    'A': 5,
-    'B': 3,
-    'C': 4,
-    'D': 5,
+    A: 5,
+    B: 3,
+    C: 4,
+    D: 5,
 }
 
 symbol_value = {
-    'A': 2,
-    'B': 3,
-    'C': 4,
-    'D': 1,
+    A: 2,
+    B: 3,
+    C: 4,
+    D: 1,
 }
 
 # checks how much the user has won
