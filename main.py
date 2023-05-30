@@ -10,22 +10,47 @@ MIN_BET = 1
 ROWS = 3
 COLS = 3
 
-# images for slots
-A = climage.convert('apple.png')
-B = climage.convert('banana.png')
-C = climage.convert('cherry.png')
-D = climage.convert('orange.png')
+# images for slots, commented out for the time being
+# A = climage.convert('apple.png')
+# B = climage.convert('banana.png')
+# C = climage.convert('cherry.png')
+# D = climage.convert('orange.png')
 
-# assigns images a value
+
 symbol_count = {
-    A: 5,
-    B: 3,
-    C: 4,
-    D: 5,
+    'A': 5,
+    'B': 3,
+    'C': 4,
+    'D': 5,
 }
 
+symbol_value = {
+    'A': 2,
+    'B': 3,
+    'C': 4,
+    'D': 1,
+}
 
-def get_slot_spin(rows, cols, symbols):
+# checks how much the user has won
+
+
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    winning_lines = []
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol] * bet
+            winning_lines.append(line + 1)
+
+    return winnings, winning_lines
+
+
+def get_slot_game(rows, cols, symbols):
     all_symbols = []
     for symbol, symbol_count in symbols.items():
         for _ in range(symbol_count):
@@ -51,10 +76,11 @@ def print_slot_machine(columns):
     for row in range(len(columns[0])):
         for i, column in enumerate(columns):
             if i != len(columns) - 1:
-                print(column[row], '|')
+                print(column[row], end=' | ')
             else:
-                print(column[row])
+                print(column[row], end='')
 
+        print()
 
 # Asks user how much money they want to deposit. Requires a number
 
@@ -109,8 +135,7 @@ def get_bet():
     return amount
 
 
-def main():
-    balance = deposit()
+def game(balance):
     lines = get_number_of_lines()
     while True:
         bet = get_bet()
@@ -124,9 +149,25 @@ def main():
     print(
         f'You are betting ${bet} on {lines} lines. Total bet is equal to ${total_bet}.')
 
-# generates slot machine
-    slots = get_slot_spin(ROWS, COLS, symbol_count)
+    # generates slot machine
+    slots = get_slot_game(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
+    print(f'You won ${winnings}.')
+    print(f'You won on lines:', *winning_lines)
+    return winnings - total_bet
+
+
+def main():
+    balance = deposit()
+    while True:
+        print(f'Current balance is ${balance}')
+        answer = input('Press enter to play. (q to quit)')
+        if answer == 'q':
+            break
+        balance += game(balance)
+
+    print(f'You left with ${balance}')
 
 
 main()
