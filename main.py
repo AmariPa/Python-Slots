@@ -2,6 +2,9 @@
 import random
 import climage
 from PIL import Image
+import colorama
+from colorama import Fore, Back, Style
+colorama.init()
 
 # consts
 MAX_LINES = 3
@@ -11,10 +14,10 @@ ROWS = 3
 COLS = 3
 
 # images for slots, commented out for the time being
-# A = climage.convert('apple.png')
-# B = climage.convert('banana.png')
-# C = climage.convert('cherry.png')
-# D = climage.convert('orange.png')
+# A = climage.convert('assets/apple.png')
+# B = climage.convert('assets/banana.png')
+# C = climage.convert('assets/cherry.png')
+# D = climage.convert('assets/orange.png')
 
 
 symbol_count = {
@@ -87,8 +90,8 @@ def print_slot_machine(columns):
 
 def deposit():
     while True:
-        amount = input(
-            'How much money would you like to deposit? Please enter a whole number. $')
+        amount = input(Back.WHITE + Fore.CYAN + Style.BRIGHT +
+                       'How much money would you like to deposit? Please enter a whole number. $')
         if amount.isdigit():
             amount = int(amount)
             if amount > 0:
